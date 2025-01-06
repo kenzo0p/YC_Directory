@@ -1,5 +1,7 @@
 import SearchForm from "../../components/SearchForm";
 import StartupCard , {StartupTypeCard} from "@/components/StartupCard";
+import { STARTUPS_QUERY } from "@/sanity/lib/query";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({
   searchParams,
@@ -7,19 +9,21 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
-  const post = [
-    {
-      _createdAt: "Yesterday",
-      views: 55,
-      author: { _id: 1, name : "Om" },
-      _id: 1,
-      description: "This is description",
-      image:
-        "https://images.unsplash.com/photo-1735236270565-983422d5a224?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "robots",
-      title: "we robots",
-    },
-  ];
+  const params = {search : query || null};
+  const { data : post} = await sanityFetch({query:STARTUPS_QUERY ,params})
+  // const post = [
+  //   {
+  //     _createdAt: "Yesterday",
+  //     views: 55,
+  //     author: { _id: 1, name : "Om" },
+  //     _id: 1,
+  //     description: "This is description",
+  //     image:
+  //       "https://images.unsplash.com/photo-1735236270565-983422d5a224?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     category: "robots",
+  //     title: "we robots",
+  //   },
+  // ];
   return (
     <>
       <section className="pink_container">
@@ -43,6 +47,7 @@ export default async function Home({
           )}
         </ul>
       </section>
+      <SanityLive/>
     </>
   );
 }
