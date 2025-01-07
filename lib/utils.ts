@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDate(date:string) {
   return new Date(date).toLocaleDateString('en-us' ,{month:'long',day:'numeric' , year:'numeric'})
 }
+
+export function parseSeverActionResponse<T>(response:T){
+  return JSON.parse(JSON.stringify(response))
+}
